@@ -15,22 +15,20 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
-
     Timer(
-            Duration(seconds: 1),
-                () =>
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => LoginView())));
+      Duration(seconds: 1),
+      () => Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (BuildContext context) => LoginView()),
+      ),
+    );
     return Container(
       color: Color(0xff08431D),
       child: Column(
         children: [
-          SizedBox(
-            height: 300,
-          ),
-          SvgPicture.asset(AppConstants().logoPath,height: 50,),
+          SizedBox(height: 300),
+          SvgPicture.asset(AppConstants().logoPath, height: 50),
           Spacer(),
-          Image.asset(AppConstants().splashBurger)
+          Image.asset(AppConstants().splashBurger),
         ],
       ),
     );
