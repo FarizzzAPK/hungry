@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hungry/core/constants/app_constants.dart';
-import 'package:hungry/features/Auth/widgets/custom_auth_button.dart';
-import 'package:hungry/features/Auth/widgets/go_to_login_view.dart';
+import 'package:hungry/features/auth/widgets/custom_auth_button.dart';
+import 'package:hungry/features/auth/widgets/go_to_login_view.dart';
 import 'package:hungry/shared/custom_text.dart';
 import 'package:hungry/shared/custom_text_form_field.dart';
 

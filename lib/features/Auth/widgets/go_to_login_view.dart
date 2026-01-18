@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hungry/features/Auth/views/login_view.dart';
+import 'package:hungry/features/auth/views/login_view.dart';
 import 'package:hungry/shared/custom_text.dart';
 
 class GoToLoginView extends StatelessWidget {

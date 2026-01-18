@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hungry/features/Auth/views/signup_view.dart';
+import 'package:hungry/features/auth/views/signup_view.dart';
 import 'package:hungry/shared/custom_text.dart';
 
 class GoToSignupView extends StatelessWidget {
