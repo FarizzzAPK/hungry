@@ -61,7 +61,7 @@ TextEditingController confirmPasswordController = TextEditingController();
                   isPassword: true,
                 ),
                 SizedBox(height: 15),
-                CustomAuthButton(buttonText: "Login", onTap: () {}),
+                CustomAuthButton(buttonText: "Sign Up", onTap: () {}),
                 SizedBox(height: 15),
                 GoToLoginView()
               ],

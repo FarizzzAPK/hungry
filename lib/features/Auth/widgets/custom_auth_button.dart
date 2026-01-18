@@ -9,7 +9,7 @@ VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap,
+      onTap:onTap,
               child: Container(
                 height: 55,
                 width: double.infinity,

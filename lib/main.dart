@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hungry/features/home/views/home_view.dart';
-import 'package:hungry/root.dart';
 import 'package:hungry/splash.dart';
 
 void main() {
@@ -14,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Root(),
+      home: Splash(),
     );
   }
 }
