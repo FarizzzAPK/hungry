@@ -1,9 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hungry/core/constants/app_constants.dart';
+import 'package:hungry/features/home/widgets/Product_card.dart';
+import 'package:hungry/features/home/widgets/product_card.dart' hide ProductCard;
 import 'package:hungry/features/home/widgets/categories_row.dart';
 import 'package:hungry/features/home/widgets/logo_and_profile_img.dart';
 import 'package:hungry/features/home/widgets/search_field.dart';
+import 'package:hungry/features/product/views/product_details_view.dart';
 import 'package:hungry/shared/custom_text.dart';
 
 class HomeView extends StatefulWidget {
@@ -30,7 +31,23 @@ class _HomeViewState extends State<HomeView> {
             const SizedBox(height: 10),
             SearchField(),
             const SizedBox(height: 25),
-            CategoriesRow()
+            CategoriesRow(),
+            const SizedBox(height: 25),
+            Expanded(
+              child: GridView.builder(shrinkWrap: true,
+                itemCount: 6,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
+                childAspectRatio: 0.81,
+                mainAxisSpacing: 20,
+                crossAxisSpacing: 10
+                ), itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailsView(),));
+                    },
+                    child: ProductCard());
+                },),
+            )
           ],
         ),
       ),

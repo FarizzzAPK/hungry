@@ -9,7 +9,7 @@ class CartView extends StatelessWidget {
     return Scaffold(
       backgroundColor:Colors.white,
     body: Center(
-      child: CustomText(text: "Profile Screen"),
+      child: CustomText(text: "Cart Screen"),
     ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:hungry/features/auth/views/signup_view.dart';
 import 'package:hungry/features/auth/widgets/custom_auth_button.dart';
 import 'package:hungry/features/auth/widgets/go_to_signup_view.dart';
 import 'package:hungry/features/home/views/home_view.dart';
+import 'package:hungry/root.dart';
 import 'package:hungry/shared/custom_text.dart';
 import 'package:hungry/shared/custom_text_form_field.dart';
 
@@ -50,7 +51,7 @@ class LoginView extends StatelessWidget {
                 ),
                 SizedBox(height: 15),
                 CustomAuthButton(buttonText: "Login", onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomeView()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Root()));
                 }),
                 SizedBox(height: 15),
                 GoToSignupView()
