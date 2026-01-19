@@ -6,7 +6,6 @@ import 'package:hungry/features/product/widgets/spicy_slider.dart';
 import 'package:hungry/features/product/widgets/total_and_add_to_cart_btn.dart';
 import 'package:hungry/shared/custom_text.dart';
 
-
 class ProductDetailsView extends StatefulWidget {
   const ProductDetailsView({super.key});
 
@@ -17,19 +16,9 @@ class ProductDetailsView extends StatefulWidget {
 class _ProductDetailsViewState extends State<ProductDetailsView> {
   double value = 0.7;
   double total = 18.5;
-  List<String> toppings = [
-    "Tomato",
-    "Onions",
-    "Pickles",
-    "Bacons",
-  ];
+  List<String> toppings = ["Tomato", "Onions", "Pickles", "Bacons"];
 
-  List<String> options = [
-    "Fries",
-    "Coleslaw",
-    "Salad",
-    "Onion",
-  ];
+  List<String> options = ["Fries", "Coleslaw", "Salad", "Onion"];
 
   List<String> topping_image = [
     "assets/images/pngwing15.png",
@@ -38,7 +27,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     "assets/images/pngwing19.png",
   ];
 
-   List<String> optioon_image = [
+  List<String> optioon_image = [
     "assets/images/image20.png",
     "assets/images/image21.png",
     "assets/images/pngwing22.png",
@@ -56,7 +45,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           onPressed: () => Navigator.pop(context),
         ),
         backgroundColor: Colors.white,
-        foregroundColor:AppConstants().PrimaryColor, 
+        foregroundColor: AppConstants().PrimaryColor,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -66,28 +55,32 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             SpicySlider(
               value: value,
               onChanged: (v) {
-              setState(() {
-                value = v;},
-                );
-            },),
+                setState(() {
+                  value = v;
+                });
+              },
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: CustomText(text: "Toppings",weight: FontWeight.bold,),
+              child: CustomText(text: "Toppings", weight: FontWeight.bold),
             ),
- SingleChildScrollView(
+            SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: List.generate(toppings.length, (index) {
-
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: CustomTopping(image: topping_image[index], topping_name: toppings[index]),
-                  );}),
+                    child: CustomTopping(
+                      image: topping_image[index],
+                      topping_name: toppings[index],
+                    ),
+                  );
+                }),
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: CustomText(text: "Side options",weight: FontWeight.bold,),
+              child: CustomText(text: "Side options", weight: FontWeight.bold),
             ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -95,12 +88,16 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 children: List.generate(options.length, (index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: CustomOption(image: optioon_image[index], option_name: options[index]),
-                  );}),
+                    child: CustomOption(
+                      image: optioon_image[index],
+                      option_name: options[index],
+                    ),
+                  );
+                }),
               ),
             ),
             Spacer(),
-            TotalAndAddToCartBtn(total: total,),
+            TotalAndAddToCartBtn(total: total),
           ],
         ),
       ),
