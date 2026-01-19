@@ -50,11 +50,17 @@ class LoginView extends StatelessWidget {
                   isPassword: true,
                 ),
                 SizedBox(height: 15),
-                CustomAuthButton(buttonText: "Login", onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Root()));
-                }),
+                CustomAuthButton(
+                  buttonText: "Login",
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Root()),
+                    );
+                  },
+                ),
                 SizedBox(height: 15),
-                GoToSignupView()
+                GoToSignupView(),
               ],
             ),
           ),

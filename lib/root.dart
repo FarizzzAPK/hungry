@@ -51,8 +51,8 @@ class _RootState extends State<Root> {
                 label: "Cart",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.favorite),
-                label: "Favorites",
+                icon: Icon(Icons.local_restaurant_sharp),
+                label: "Order History",
               ),
 
               BottomNavigationBarItem(

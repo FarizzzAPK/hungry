@@ -7,11 +7,11 @@ import 'package:hungry/shared/custom_text.dart';
 import 'package:hungry/shared/custom_text_form_field.dart';
 
 class SignupView extends StatelessWidget {
-   SignupView({super.key});
-TextEditingController nameController = TextEditingController();
-TextEditingController emailController = TextEditingController();
-TextEditingController passwordController = TextEditingController();
-TextEditingController confirmPasswordController = TextEditingController();
+  SignupView({super.key});
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ TextEditingController confirmPasswordController = TextEditingController();
                 SizedBox(height: 15),
                 CustomAuthButton(buttonText: "Sign Up", onTap: () {}),
                 SizedBox(height: 15),
-                GoToLoginView()
+                GoToLoginView(),
               ],
             ),
           ),

@@ -8,27 +8,27 @@ class GoToLoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CustomText(
-                      text: "Already have an account..? ",
-                      color: Colors.white,
-                      size: 13,
-                    ),
-                    GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginView()),
-                      ),
-                      child: CustomText(
-                        text: "Login",
-                        color: Colors.white,
-                        size: 15,
-                        weight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                );
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        CustomText(
+          text: "Already have an account..? ",
+          color: Colors.white,
+          size: 13,
+        ),
+        GestureDetector(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LoginView()),
+          ),
+          child: CustomText(
+            text: "Login",
+            color: Colors.white,
+            size: 15,
+            weight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
   }
 }

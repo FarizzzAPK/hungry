@@ -3,8 +3,9 @@ import 'package:hungry/core/constants/app_constants.dart';
 import 'package:hungry/features/product/widgets/Custom_Topping.dart';
 import 'package:hungry/features/product/widgets/Custom_option.dart';
 import 'package:hungry/features/product/widgets/spicy_slider.dart';
-import 'package:hungry/features/product/widgets/total_and_add_to_cart_btn.dart';
 import 'package:hungry/shared/custom_text.dart';
+
+import '../../../shared/custom_button.dart';
 
 class ProductDetailsView extends StatefulWidget {
   const ProductDetailsView({super.key});
@@ -49,56 +50,57 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SpicySlider(
-              value: value,
-              onChanged: (v) {
-                setState(() {
-                  value = v;
-                });
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: CustomText(text: "Toppings", weight: FontWeight.bold),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: List.generate(toppings.length, (index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CustomTopping(
-                      image: topping_image[index],
-                      topping_name: toppings[index],
-                    ),
-                  );
-                }),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SpicySlider(
+                value: value,
+                onChanged: (v) {
+                  setState(() {
+                    value = v;
+                  });
+                },
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: CustomText(text: "Side options", weight: FontWeight.bold),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: List.generate(options.length, (index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CustomOption(
-                      image: optioon_image[index],
-                      option_name: options[index],
-                    ),
-                  );
-                }),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: CustomText(text: "Toppings", weight: FontWeight.bold),
               ),
-            ),
-            Spacer(),
-            TotalAndAddToCartBtn(total: total),
-          ],
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.generate(toppings.length, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CustomTopping(
+                        image: topping_image[index],
+                        topping_name: toppings[index],
+                      ),
+                    );
+                  }),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: CustomText(text: "Side options", weight: FontWeight.bold),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.generate(options.length, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CustomOption(
+                        image: optioon_image[index],
+                        option_name: options[index],
+                      ),
+                    );
+                  }),
+                ),
+              ),
+              CustomButton(total: total,buttonText: "Add To Cart",),
+            ],
+          ),
         ),
       ),
     );

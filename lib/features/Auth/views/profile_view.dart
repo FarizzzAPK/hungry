@@ -7,10 +7,8 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Colors.white,
-    body: Center(
-      child: CustomText(text: "Profile Screen"),
-    ),
+      backgroundColor: Colors.white,
+      body: Center(child: CustomText(text: "Profile Screen")),
     );
   }
 }

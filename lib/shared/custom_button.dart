@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hungry/core/constants/app_constants.dart';
 import 'package:hungry/shared/custom_text.dart';
 
-class TotalAndAddToCartBtn extends StatelessWidget {
-  TotalAndAddToCartBtn({super.key, required this.total});
+class CustomButton extends StatelessWidget {
+  CustomButton({super.key, required this.total, required this.buttonText});
   final double total;
+  final String buttonText;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,7 +49,7 @@ class TotalAndAddToCartBtn extends StatelessWidget {
               ),
               child: Center(
                 child: CustomText(
-                  text: "Add To Cart",
+                  text: buttonText,
                   color: Colors.white,
                   weight: FontWeight.bold,
                 ),
