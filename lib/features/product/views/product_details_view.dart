@@ -3,6 +3,7 @@ import 'package:hungry/core/constants/app_constants.dart';
 import 'package:hungry/features/product/widgets/Custom_Topping.dart';
 import 'package:hungry/features/product/widgets/Custom_option.dart';
 import 'package:hungry/features/product/widgets/spicy_slider.dart';
+import 'package:hungry/features/product/widgets/total_and_add_to_cart_btn.dart';
 import 'package:hungry/shared/custom_text.dart';
 
 
@@ -15,6 +16,7 @@ class ProductDetailsView extends StatefulWidget {
 
 class _ProductDetailsViewState extends State<ProductDetailsView> {
   double value = 0.7;
+  double total = 18.5;
   List<String> toppings = [
     "Tomato",
     "Onions",
@@ -36,6 +38,12 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     "assets/images/pngwing19.png",
   ];
 
+   List<String> optioon_image = [
+    "assets/images/image20.png",
+    "assets/images/image21.png",
+    "assets/images/pngwing22.png",
+    "assets/images/pngwing23.png",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -87,10 +95,12 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 children: List.generate(options.length, (index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: CustomOption(image: topping_image[index], option_name: options[index]),
+                    child: CustomOption(image: optioon_image[index], option_name: options[index]),
                   );}),
               ),
             ),
+            Spacer(),
+            TotalAndAddToCartBtn(total: total,),
           ],
         ),
       ),
