@@ -3,6 +3,7 @@ import 'package:hungry/core/constants/app_constants.dart';
 import 'package:hungry/features/auth/widgets/Button_row.dart';
 import 'package:hungry/features/auth/widgets/payment_card.dart';
 import 'package:hungry/features/auth/widgets/profilr_text_field.dart';
+import 'package:hungry/shared/custom_text.dart';
 
 
 class ProfileView extends StatelessWidget {
@@ -20,28 +21,20 @@ class ProfileView extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          const SizedBox(height: 50),
-
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal:16.0,vertical: 25),
+                child: CustomText(text: "Profile Details",color: AppConstants().PrimaryColor,size: 25,weight: FontWeight.bold,),
+              ),
+            ],
+          ),
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const Spacer(),
-                      const Icon(Icons.settings, color: Colors.white),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
                   CircleAvatar(
                     radius: 50,
                     backgroundImage: AssetImage('assets/images/salem.jpeg'),
