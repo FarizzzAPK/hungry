@@ -4,8 +4,8 @@ import 'package:hungry/features/product/widgets/Custom_Topping.dart';
 import 'package:hungry/features/product/widgets/Custom_option.dart';
 import 'package:hungry/features/product/widgets/spicy_slider.dart';
 import 'package:hungry/shared/custom_text.dart';
+import 'package:hungry/shared/custom_total.dart';
 
-import '../../../shared/custom_button.dart';
 
 class ProductDetailsView extends StatefulWidget {
   const ProductDetailsView({super.key});
@@ -98,7 +98,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                   }),
                 ),
               ),
-              CustomButton(total: total,buttonText: "Add To Cart",),
+              CustomTotal(total: total,buttonText: "Add To Cart",onTap: (){},totalText: "Total",),
             ],
           ),
         ),

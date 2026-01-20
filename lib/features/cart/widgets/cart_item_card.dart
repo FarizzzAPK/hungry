@@ -6,7 +6,7 @@ class CartItemCard extends StatelessWidget {
   final String subtitle;
   final int quantity;
   final VoidCallback onAdd;
-  final VoidCallback onRemove;
+  final VoidCallback onMin;
   final VoidCallback onDelete;
 
   const CartItemCard({
@@ -16,7 +16,7 @@ class CartItemCard extends StatelessWidget {
     required this.subtitle,
     required this.quantity,
     required this.onAdd,
-    required this.onRemove,
+    required this.onMin,
     required this.onDelete,
   });
 
@@ -80,7 +80,7 @@ class CartItemCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _counterButton(Icons.remove, onRemove),
+                    _counterButton(Icons.remove, onMin),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: Text(

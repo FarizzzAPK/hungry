@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hungry/features/cart/widgets/cart_item_card.dart';
-
-import '../../../shared/custom_button.dart';
-
+import 'package:hungry/features/chekout/views/checkout_view.dart';
+import 'package:hungry/shared/custom_total.dart';
 
 class CartView extends StatefulWidget {
   const CartView({super.key});
@@ -12,6 +11,26 @@ class CartView extends StatefulWidget {
 }
 
 class _CartViewState extends State<CartView> {
+  late List<int> quantities;
+  final int itemCount=20;
+  @override
+  void initState(){
+    quantities = List.generate(itemCount, (_)=>1);
+    super.initState();
+  }
+
+  void onAdd(int index){
+    setState(() {
+      quantities[index]++;
+    });
+  }
+  void onMin(int index){
+    setState(() {
+      if(quantities[index] != 0)
+      quantities[index]--;
+    });
+  }
+
   int number = 1;
   @override
   Widget build(BuildContext context) {
@@ -30,15 +49,18 @@ class _CartViewState extends State<CartView> {
                         image: "assets/images/image6.png",
                         title: "Cheeseburger",
                         subtitle: "Wendy's Burger",
-                        quantity: number,
-                        onAdd: () {},
-                        onRemove: () {},
+                        quantity: quantities[index],
+                        onAdd: ()=> onAdd(index),
+                        onMin: ()=> onMin(index),
                         onDelete: () {},
                       );
                     },
                   ),
                 ),
-            CustomButton(total: 90.19,buttonText: "Checkout",),
+            CustomTotal(totalText: "Total",
+              total: 90.19,buttonText: "Checkout",onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => CheckoutView(),));
+            },),
 
           ],
         ),

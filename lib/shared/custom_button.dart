@@ -1,62 +1,35 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hungry/core/constants/app_constants.dart';
-import 'package:hungry/shared/custom_text.dart';
+
+import '../core/constants/app_constants.dart';
+import 'custom_text.dart';
 
 class CustomButton extends StatelessWidget {
-  CustomButton({super.key, required this.total, required this.buttonText});
-  final double total;
-  final String buttonText;
+   CustomButton({super.key, required this.buttonText, required this.width, required this.height, required this.onTap, required this.size});
+   final String buttonText;
+   final double width;
+   final double height;
+   final VoidCallback onTap;
+   final double size;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      height: 120,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomText(text: "Total", weight: FontWeight.bold, size: 18),
-              SizedBox(height: 15),
-              Row(
-                children: [
-                  CustomText(
-                    text: "\$ ",
-                    color: AppConstants().PrimaryColor,
-                    weight: FontWeight.bold,
-                    size: 18,
-                  ),
-                  CustomText(
-                    text: "$total",
-                    color: AppConstants().PrimaryColor,
-                    weight: FontWeight.bold,
-                    size: 20,
-                  ),
-                ],
-              ),
-            ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: AppConstants().PrimaryColor,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Center(
+          child: CustomText(
+            size: size,
+            text: buttonText,
+            color: Colors.white,
+            weight: FontWeight.bold,
           ),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              width: 200,
-              height: 70,
-              decoration: BoxDecoration(
-                color: AppConstants().PrimaryColor,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Center(
-                child: CustomText(
-                  text: buttonText,
-                  color: Colors.white,
-                  weight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
