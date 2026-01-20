@@ -18,7 +18,7 @@ class LogoAndProfileImg extends StatelessWidget {
         CircleAvatar(
           radius: 30,
           backgroundImage: AssetImage(
-            'assets/images/WhatsApp Image 2026-01-18 at 8.40.57 PM.jpeg',
+            'assets/images/salem.jpeg',
           ),
         ),
       ],

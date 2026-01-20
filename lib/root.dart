@@ -33,7 +33,7 @@ class _RootState extends State<Root> {
 
         borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
         child: SizedBox(
-          height: 70,
+          height: 75,
           child: BottomNavigationBar(
             backgroundColor: AppConstants().PrimaryColor,
             currentIndex: currentIndex,

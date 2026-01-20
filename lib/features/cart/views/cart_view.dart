@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hungry/core/constants/app_constants.dart';
 import 'package:hungry/features/cart/widgets/cart_item_card.dart';
 import 'package:hungry/features/chekout/views/checkout_view.dart';
+import 'package:hungry/shared/custom_text.dart';
 import 'package:hungry/shared/custom_total.dart';
 
 class CartView extends StatefulWidget {
@@ -37,12 +39,17 @@ class _CartViewState extends State<CartView> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.only(left: 16.0,right: 16,top: 40,bottom: 60),
+        padding: const EdgeInsets.only(left: 16.0,right: 16,top: 25,bottom: 60),
         child: Column(
           children: [
-            SizedBox(height: 5),
+            Row(
+              children: [
+                CustomText(text: "Your Cart",color: AppConstants().PrimaryColor,size: 25,weight: FontWeight.bold,),
+              ],
+            ),
                 Expanded(
                   child: ListView.builder(
+                    padding: EdgeInsets.all(0),
                     itemCount: 5,
                     itemBuilder: (context, index) {
                       return CartItemCard(
@@ -57,7 +64,8 @@ class _CartViewState extends State<CartView> {
                     },
                   ),
                 ),
-            CustomTotal(totalText: "Total",
+            CustomTotal(
+              totalText: "Total",
               total: 90.19,buttonText: "Checkout",onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => CheckoutView(),));
             },),

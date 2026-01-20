@@ -15,7 +15,7 @@ class CustomTotal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      height: 120,
+      height: 110,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
