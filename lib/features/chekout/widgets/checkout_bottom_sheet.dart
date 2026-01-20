@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hungry/core/constants/app_constants.dart';
+import 'package:hungry/root.dart';
 import 'package:hungry/shared/custom_button.dart';
 import 'package:hungry/shared/custom_text.dart';
 
@@ -52,8 +53,10 @@ class CheckoutBottomSheet extends StatelessWidget {
             width: 220,
             height: 60,
             onTap: () {
-              Navigator.pop(context);
-            },
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const Root()),
+              );            },
           ),
         ],
       ),

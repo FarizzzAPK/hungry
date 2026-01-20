@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hungry/core/constants/app_constants.dart';
 import 'package:hungry/features/auth/views/login_view.dart';
+import 'package:hungry/root.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -18,7 +19,7 @@ class _SplashState extends State<Splash> {
     Timer(
       Duration(seconds: 1),
       () => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => LoginView()),
+        MaterialPageRoute(builder: (BuildContext context) => Root()),
       ),
     );
     return Container(

@@ -29,10 +29,11 @@ class _RootState extends State<Root> {
 
       body: IndexedStack(index: currentIndex, children: screens),
 
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(12),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(30),
+      bottomNavigationBar: ClipRRect(
+
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
+        child: SizedBox(
+          height: 70,
           child: BottomNavigationBar(
             backgroundColor: AppConstants().PrimaryColor,
             currentIndex: currentIndex,
