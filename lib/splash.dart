@@ -19,7 +19,7 @@ class _SplashState extends State<Splash> {
     Timer(
       Duration(seconds: 1),
       () => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => Root()),
+        MaterialPageRoute(builder: (BuildContext context) => LoginView()),
       ),
     );
     return Container(

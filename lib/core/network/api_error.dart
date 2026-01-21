@@ -7,7 +7,7 @@ class ApiError {
 
   @override
   String toString(){
-    return "error causes $message (status Code is : $statusCode) ";
+    return "$message";
   }
 
 }

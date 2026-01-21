@@ -2,38 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:hungry/shared/custom_text.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  CustomTextFormField({
+  const CustomTextFormField({
     super.key,
     required this.controller,
     required this.hintText,
     required this.isPassword,
   });
-  TextEditingController controller = TextEditingController();
-  String hintText;
-  bool isPassword;
+
+  final TextEditingController controller;
+  final String hintText;
+  final bool isPassword;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      obscureText: isPassword,
       controller: controller,
+      obscureText: isPassword,
       cursorColor: Colors.grey,
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return '$hintText is required';
+        }
+        if (hintText == "Email" && !value.contains('@')) {
+          return 'Enter a valid email';
+        }
+        if (hintText == "Password" && value.length < 6) {
+          return 'Password must be at least 6 characters';
+        }
+        return null; // ✅ valid
+      },
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-
-        enabled: true,
         filled: true,
-        hint: CustomText(text: hintText),
         fillColor: Colors.white,
+        hintText: hintText,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
       ),
     );
   }
 }
+
