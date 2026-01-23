@@ -160,45 +160,44 @@ class AuthRepo {
   }
 
   /// Logout
-  // Future<void> logout() async {
-  //   final response = await apiService.post('/logout', {});
-  //   if (response['data'] != null) {
-  //     throw ApiError(message: 'kfnepkvnfkb');
-  //   }
-  //   await PrefHelper.clearToken();
-  //   _currentUser = null;
-  //   isGuest = true;
-  // }
+  Future<void> logout() async {
+    final response = await apiService.post('/logout', {});
+    if (response['data'] != null) {
+      throw ApiError(message: 'kfnepkvnfkb');
+    }
+    await PrefHelper.clearToken();
+    _currentUser = null;
+    isGuest = true;
+  }
 
-  /// auto login
-  // Future<UserModel?> autoLogin() async {
-  //   final token = await PrefHelper.getToken();
-  //   print('Token from storage: ${token ?? 'null'}');
-  //
-  //   if (token == null || token == 'guest') {
-  //     print('No valid token found - setting as guest');
-  //     isGuest = true;
-  //     _currentUser = null;
-  //     return null;
-  //   }
-  //
-  //   print('Valid token found - attempting to fetch profile');
-  //   isGuest = false;
-  //
-  //   try {
-  //     final user = await getProfileData();
-  //     print('Profile data fetched successfully');
-  //     _currentUser = user;
-  //     return user;
-  //   } catch (e) {
-  //     print('Profile fetch failed: $e');
-  //     print('Clearing invalid token and setting as guest');
-  //     await PrefHelper.clearToken();
-  //     isGuest = true;
-  //     _currentUser = null;
-  //     return null;
-  //   }
-  // }
+  Future<UserModel?> autoLogin() async {
+    final token = await PrefHelper.getToken();
+    print('Token from storage: ${token ?? 'null'}');
+
+    if (token == null || token == 'guest') {
+      print('No valid token found - setting as guest');
+      isGuest = true;
+      _currentUser = null;
+      return null;
+    }
+
+    print('Valid token found - attempting to fetch profile');
+    isGuest = false;
+
+    try {
+      final user = await getProfileData();
+      print('Profile data fetched successfully');
+      _currentUser = user;
+      return user;
+    } catch (e) {
+      print('Profile fetch failed: $e');
+      print('Clearing invalid token and setting as guest');
+      await PrefHelper.clearToken();
+      isGuest = true;
+      _currentUser = null;
+      return null;
+    }
+  }
 
   Future<void> continueAsGuest() async {
     isGuest = true;

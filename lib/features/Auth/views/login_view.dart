@@ -16,11 +16,13 @@ import 'package:hungry/shared/custom_text_form_field.dart';
 class LoginView extends StatefulWidget {
   LoginView({super.key});
 
+
   @override
   State<LoginView> createState() => _LoginViewState();
 }
 
 class _LoginViewState extends State<LoginView> {
+
   final formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -28,7 +30,6 @@ class _LoginViewState extends State<LoginView> {
   final authRepo = AuthRepo();
 
   Future<void> login() async {
-    log("done10");
     if (!formKey.currentState!.validate()) return;
     setState(() => isLoading = true);
     try {
@@ -37,16 +38,20 @@ class _LoginViewState extends State<LoginView> {
         passwordController.text.trim(),
       );
       if (user != null) Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) =>  Root()));
-      log("done");
     } catch (e) {
       log("error1");
       ScaffoldMessenger.of(context).showSnackBar(
         customSnack(e is ApiError ? e.message : 'Unhandled login error'),
       );
     } finally {
-      log("done2");
       setState(() => isLoading = false);
     }
+  }
+  @override
+  void initState() {
+    emailController.text = "faris20223798@gmail.com";
+    passwordController.text = "123456789";
+    super.initState();
   }
   @override
   Widget build(BuildContext context) {
