@@ -8,7 +8,6 @@ import 'package:hungry/features/auth/data/user_model.dart';
 import 'package:hungry/features/auth/views/login_view.dart';
 import 'package:hungry/features/auth/widgets/edit_profile_data.dart';
 import 'package:hungry/features/auth/widgets/profile_data_read_only.dart';
-import 'package:hungry/shared/custom_button.dart';
 import 'package:hungry/shared/custom_snack.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -83,13 +82,16 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Future<void> updateProfileData() async {
-    if (isLoadingUpdate) return ;
+    if (isLoadingUpdate) return;
 
     setState(() => isLoadingUpdate = true);
     try {
+      final emailToSend = _email.text.trim();
+      final hasEmailChanged = userModel?.email != emailToSend;
+
       final user = await authRepo.updateProfileData(
         name: _name.text.trim(),
-        email: _email.text.trim(),
+        email: hasEmailChanged ? emailToSend : userModel!.email,
         address: _address.text.trim(),
         visa: _visa.text.trim(),
         imagePath: selectedImage,
@@ -99,12 +101,14 @@ class _ProfileViewState extends State<ProfileView> {
 
       setState(() {
         userModel = user;
+        selectedImage = null;
         isEditing = false;
         isLoadingUpdate = false;
       });
 
-      ScaffoldMessenger.of(context)
-          .showSnackBar(customSnack('Profile updated successfully'));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(customSnack('Profile updated successfully'));
     } catch (e) {
       if (!mounted) return;
       setState(() => isLoadingUpdate = false);
@@ -122,7 +126,7 @@ class _ProfileViewState extends State<ProfileView> {
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) =>  LoginView()),
+        MaterialPageRoute(builder: (_) => LoginView()),
       );
     } finally {
       if (mounted) setState(() => isLoadingLogout = false);
@@ -131,23 +135,6 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    if (isGuest) {
-      return Scaffold(
-        body: Center(
-          child: CustomButton(
-            onTap: () => Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) =>  LoginView()),
-            ),
-            buttonText: 'Go to Login',
-            width: 200,
-            height: 70,
-            size: 15,
-          ),
-        ),
-      );
-    }
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -161,35 +148,37 @@ class _ProfileViewState extends State<ProfileView> {
           weight: FontWeight.bold,
         ),
         actions: [
+          isEditing ?
           IconButton(
-            icon: Icon(
-              isEditing ? Icons.close : Icons.edit,
+            icon: Icon(Icons.close,
               color: AppConstants().PrimaryColor,
             ),
+
             onPressed: () => setState(() => isEditing = !isEditing),
-          ),
+          ) : SizedBox()
         ],
       ),
       body: Skeletonizer(
         enabled: userModel == null,
         child: userModel == null
-            ? const SizedBox()
+            ? const Center(child: CircularProgressIndicator())
             : isEditing
             ? EditProfileData(
-          isLoadingUpdate: isLoadingUpdate,
-          userModel: userModel!,
-          updateUserData: updateProfileData,
-          pickImage: pickImage,
-          nameController: _name,
-          emailController: _email,
-          addressController: _address,
-          visaController: _visa,
-        )
+                isLoadingUpdate: isLoadingUpdate,
+                userModel: userModel!,
+                updateUserData: updateProfileData,
+                pickImage: pickImage,
+                nameController: _name,
+                emailController: _email,
+                addressController: _address,
+                visaController: _visa,
+                selectedImagePath: selectedImage,
+              )
             : ProfileDataReadOnly(
-          userModel: userModel!,
-          logout: logout,
-          onEdit: () => setState(() => isEditing = true),
-        ),
+                userModel: userModel!,
+                logout: logout,
+                onEdit: () => setState(() => isEditing = true),
+              ),
       ),
     );
   }

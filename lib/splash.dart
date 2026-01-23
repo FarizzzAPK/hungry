@@ -14,6 +14,8 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+
+  AppConstants appConstants = AppConstants();
   @override
   Widget build(BuildContext context) {
     Timer(
@@ -27,9 +29,9 @@ class _SplashState extends State<Splash> {
       child: Column(
         children: [
           SizedBox(height: 300),
-          SvgPicture.asset(AppConstants().logoPath, height: 50),
+          SvgPicture.asset(appConstants.logoPath, height: 50),
           Spacer(),
-          Image.asset(AppConstants().splashBurger),
+          Image.asset(appConstants.splashBurger),
         ],
       ),
     );

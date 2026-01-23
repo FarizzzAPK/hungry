@@ -26,10 +26,11 @@ class AuthRepo {
         final msg = response['message'];
         final code = response['code'];
         final data = response['data'];
+        final coder = code is int ? code : int.tryParse(code.toString());
 
         log('Login response - code: $code, data: $data');
 
-        if (code != 200 && code != 201) {
+        if (coder != 200 && coder != 201) {
           throw ApiError(message: msg ?? 'Unknown error');
         }
 
@@ -49,7 +50,7 @@ class AuthRepo {
       } else {
         throw ApiError(message: 'UnExpected Error From Server');
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ApiExceptions.handleError(e);
     } catch (e) {
       throw ApiError(message: e.toString());
@@ -70,8 +71,8 @@ class AuthRepo {
       if (response is Map<String, dynamic>) {
         final msg = response['message'];
         final code = response['code'];
-        final coder = int.tryParse(code);
         final data = response['data'];
+        final coder = code is int ? code : int.tryParse(code.toString());
 
         if (coder != 200 && coder != 201) {
           throw ApiError(message: msg ?? 'Unknown error');
@@ -87,7 +88,7 @@ class AuthRepo {
       } else {
         throw ApiError(message: 'UnExpected Error From Server');
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ApiExceptions.handleError(e);
     } catch (e) {
       throw ApiError(message: e.toString());
@@ -105,7 +106,7 @@ class AuthRepo {
       final user = UserModel.fromJson(response['data']);
       _currentUser = user;
       return user;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ApiExceptions.handleError(e);
     } catch (e) {
       throw ApiError(message: e.toString());
@@ -140,7 +141,7 @@ class AuthRepo {
         final msg = response['message'];
         final code = response['code'];
         final data = response['data'];
-        final coder = int.tryParse(code);
+        final coder = code is int ? code : int.tryParse(code.toString());
 
         if (coder != 200 && coder != 201) {
           throw ApiError(message: msg ?? 'Unknown error');
@@ -152,14 +153,13 @@ class AuthRepo {
       } else {
         throw ApiError(message: 'Invalid  Error from here');
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ApiExceptions.handleError(e);
     } catch (e) {
       throw ApiError(message: e.toString());
     }
   }
 
-  /// Logout
   Future<void> logout() async {
     final response = await apiService.post('/logout', {});
     if (response['data'] != null) {
