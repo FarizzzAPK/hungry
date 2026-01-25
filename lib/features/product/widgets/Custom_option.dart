@@ -2,22 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:hungry/shared/custom_text.dart';
 
 class CustomOption extends StatelessWidget {
-  CustomOption({super.key, required this.image, required this.option_name});
-  final String image;
-  final String option_name;
+  final String? image;
+  final String? name;
+
+  CustomOption({super.key, this.image, this.name});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 120,
       width: 100,
       decoration: BoxDecoration(
-        color: Color(0xff3C2F2F),
+        color: const Color(0xff3C2F2F),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
             blurRadius: 8,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -30,7 +32,9 @@ class CustomOption extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
             ),
-            child: Image.asset(image, height: 30, width: 30),
+            child: image != null && image!.isNotEmpty
+                ? Image.network(image!, height: 30, width: 30, fit: BoxFit.cover)
+                : const Icon(Icons.image_not_supported, size: 30, color: Colors.grey),
           ),
           Expanded(
             child: Padding(
@@ -39,14 +43,12 @@ class CustomOption extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CustomText(
-                    text: option_name,
+                    text: name ?? "No Name",
                     color: Colors.white,
                     size: 11,
                     weight: FontWeight.bold,
                   ),
-
                   const Spacer(),
-
                   Container(
                     width: 21,
                     height: 21,
@@ -62,7 +64,6 @@ class CustomOption extends StatelessWidget {
                         Icons.add,
                         color: Colors.white,
                         size: 15,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hungry/core/constants/app_constants.dart';
+import 'package:hungry/features/product/data/models/options_model.dart';
+import 'package:hungry/features/product/data/models/topping_model.dart';
+import 'package:hungry/features/product/data/repos/product_repo.dart';
 import 'package:hungry/features/product/widgets/Custom_Topping.dart';
 import 'package:hungry/features/product/widgets/Custom_option.dart';
 import 'package:hungry/features/product/widgets/spicy_slider.dart';
 import 'package:hungry/shared/custom_text.dart';
 import 'package:hungry/shared/custom_total.dart';
-
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductDetailsView extends StatefulWidget {
   const ProductDetailsView({super.key});
@@ -17,89 +20,140 @@ class ProductDetailsView extends StatefulWidget {
 class _ProductDetailsViewState extends State<ProductDetailsView> {
   double value = 0.7;
   double total = 18.5;
-  List<String> toppings = ["Tomato", "Onions", "Pickles", "Bacons"];
 
-  List<String> options = ["Fries", "Coleslaw", "Salad", "Onion"];
+  final ProductRepo productRepo = ProductRepo();
 
-  List<String> topping_image = [
-    "assets/images/pngwing15.png",
-    "assets/images/pngwing17.png",
-    "assets/images/pngwing18.png",
-    "assets/images/pngwing19.png",
-  ];
+  List<ToppingModel>? toppings;
+  List<OptionsModel>? options;
 
-  List<String> optioon_image = [
-    "assets/images/image20.png",
-    "assets/images/image21.png",
-    "assets/images/pngwing22.png",
-    "assets/images/pngwing23.png",
-  ];
+  @override
+  void initState() {
+    super.initState();
+    getToppings();
+    getOptions();
+  }
+
+  Future<void> getToppings() async {
+    final response = await productRepo.getToppings();
+    if (mounted) {
+      setState(() => toppings = response);
+    }
+  }
+
+  Future<void> getOptions() async {
+    final response = await productRepo.getOptions();
+    if (mounted) {
+      setState(() => options = response);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final bool isLoading = toppings == null || options == null;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_rounded, weight: 700, size: 25),
+          icon: const Icon(Icons.arrow_back_rounded, size: 25),
           onPressed: () => Navigator.pop(context),
         ),
         backgroundColor: Colors.white,
         foregroundColor: AppConstants().PrimaryColor,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SpicySlider(
-                value: value,
-                onChanged: (v) {
-                  setState(() {
-                    value = v;
-                  });
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: CustomText(text: "Toppings", weight: FontWeight.bold),
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(toppings.length, (index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomTopping(
-                        image: topping_image[index],
-                        topping_name: toppings[index],
-                      ),
-                    );
-                  }),
+          child: Skeletonizer(
+            enabled: isLoading,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SpicySlider(
+                  value: value,
+                  onChanged: (v) {
+                    setState(() {
+                      value = v;
+                    });
+                  },
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: CustomText(text: "Side options", weight: FontWeight.bold),
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(options.length, (index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomOption(
-                        image: optioon_image[index],
-                        option_name: options[index],
-                      ),
-                    );
-                  }),
+
+                const SizedBox(height: 16),
+
+                 CustomText(
+                  text: "Toppings",
+                  weight: FontWeight.bold,
                 ),
-              ),
-              CustomTotal(total: total,buttonText: "Add To Cart",onTap: (){},totalText: "Total",),
-            ],
+
+                const SizedBox(height: 8),
+
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(
+                      toppings?.length ?? 4,
+                          (index) {
+                        final topping = (toppings != null &&
+                            index < toppings!.length)
+                            ? toppings![index]
+                            : null;
+
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CustomTopping(
+                            image: topping?.image ?? '',
+                            name: topping?.name ?? 'Loading',
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                 CustomText(
+                  text: "Side options",
+                  weight: FontWeight.bold,
+                ),
+
+                const SizedBox(height: 8),
+
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(
+                      options?.length ?? 4,
+                          (index) {
+                        final option =
+                        (options != null && index < options!.length)
+                            ? options![index]
+                            : null;
+
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CustomOption(
+                            image: option?.image ?? '',
+                            name: option?.name ?? 'Loading',
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                /// 🔥 Total Section
+                CustomTotal(
+                  total: total,
+                  totalText: "Total",
+                  buttonText: "Add To Cart",
+                  onTap: () {},
+                ),
+              ],
+            ),
           ),
         ),
       ),

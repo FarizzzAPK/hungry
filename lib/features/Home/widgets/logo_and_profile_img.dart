@@ -5,8 +5,10 @@ import 'package:hungry/features/auth/data/user_model.dart';
 import 'package:hungry/shared/user_image.dart';
 
 class LogoAndProfileImg extends StatelessWidget {
-   LogoAndProfileImg({super.key,required this.userModel,});
-   final UserModel? userModel;
+
+   LogoAndProfileImg({super.key, this.userModel});
+  AppConstants appConstants = AppConstants();
+  final UserModel? userModel;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -15,10 +17,18 @@ class LogoAndProfileImg extends StatelessWidget {
         SvgPicture.asset(
           AppConstants().logoPath,
           height: 40,
-          color: AppConstants().PrimaryColor,
+          color: appConstants.PrimaryColor,
         ),
-        UserImage(userModel: userModel!,)
+
+        userModel == null
+            ? const CircleAvatar(
+          radius: 20,
+          backgroundColor: Colors.grey,
+          child: Icon(Icons.person, color: Colors.white),
+        )
+            : UserImage(userModel: userModel!)
       ],
     );
   }
 }
+
