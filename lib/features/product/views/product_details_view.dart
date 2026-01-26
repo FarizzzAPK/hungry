@@ -11,8 +11,8 @@ import 'package:hungry/shared/custom_total.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductDetailsView extends StatefulWidget {
-  const ProductDetailsView({super.key});
-
+  const ProductDetailsView({super.key, required this.image});
+  final String image;
   @override
   State<ProductDetailsView> createState() => _ProductDetailsViewState();
 }
@@ -20,6 +20,8 @@ class ProductDetailsView extends StatefulWidget {
 class _ProductDetailsViewState extends State<ProductDetailsView> {
   double value = 0.7;
   double total = 18.5;
+ int? selectedTopping;
+  int? selectedOption;
 
   final ProductRepo productRepo = ProductRepo();
 
@@ -71,6 +73,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SpicySlider(
+                  image: widget.image,
                   value: value,
                   onChanged: (v) {
                     setState(() {
@@ -78,68 +81,64 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                     });
                   },
                 ),
-
                 const SizedBox(height: 16),
-
-                 CustomText(
-                  text: "Toppings",
-                  weight: FontWeight.bold,
-                ),
+                CustomText(text: "Toppings", weight: FontWeight.bold),
 
                 const SizedBox(height: 8),
 
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: List.generate(
-                      toppings?.length ?? 4,
-                          (index) {
-                        final topping = (toppings != null &&
-                            index < toppings!.length)
-                            ? toppings![index]
-                            : null;
-
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CustomTopping(
-                            image: topping?.image ?? '',
-                            name: topping?.name ?? 'Loading',
-                          ),
-                        );
-                      },
-                    ),
+                    children: List.generate(toppings?.length ?? 4, (index) {
+                      final topping =
+                          (toppings != null && index < toppings!.length)
+                          ? toppings![index]
+                          : null;
+                      bool isSelected = false;
+                      if(selectedTopping == index){
+                        isSelected=true;
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomTopping(
+                          onTap: () {
+                            setState(() {
+                              selectedTopping = index;
+                            });
+                          },
+                          isSelected: isSelected,
+                          image: topping?.image ?? '',
+                          name: topping?.name ?? 'Loading',
+                        ),
+                      );
+                    }),
                   ),
                 ),
-
                 const SizedBox(height: 16),
-
-                 CustomText(
-                  text: "Side options",
-                  weight: FontWeight.bold,
-                ),
-
+                CustomText(text: "Side options", weight: FontWeight.bold),
                 const SizedBox(height: 8),
-
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: List.generate(
-                      options?.length ?? 4,
-                          (index) {
-                        final option =
-                        (options != null && index < options!.length)
-                            ? options![index]
-                            : null;
-
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CustomOption(
-                            image: option?.image ?? '',
-                            name: option?.name ?? 'Loading',
-                          ),
-                        );
-                      },
-                    ),
+                    children: List.generate(options?.length ?? 4, (index) {
+                      final option =
+                          (options != null && index < options!.length)
+                          ? options![index]
+                          : null;
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomOption(
+                          onTap: (){
+                        setState(() {
+                        selectedOption = index;
+                        });
+                        },
+                          isSelected: selectedOption == index,
+                          image: option?.image ?? '',
+                          name: option?.name ?? 'Loading',
+                        ),
+                      );
+                    }),
                   ),
                 ),
 

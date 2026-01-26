@@ -3,9 +3,10 @@ import 'package:hungry/core/constants/app_constants.dart';
 import 'package:hungry/shared/custom_text.dart';
 
 class SpicySlider extends StatefulWidget {
-  SpicySlider({super.key, required this.value, required this.onChanged});
+  SpicySlider({super.key, required this.value, required this.onChanged, required this.image});
   final double value;
   final ValueChanged<double> onChanged;
+  final String image;
 
   @override
   State<SpicySlider> createState() => _SpicySliderState();
@@ -17,11 +18,12 @@ class _SpicySliderState extends State<SpicySlider> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Image.asset(
-          "assets/images/pngwing12.png",
+        Image.network(
+          widget.image,
           height: 250,
+          width: 150,
           errorBuilder: (context, error, stackTrace) =>
-              const Icon(Icons.fastfood, size: 100),
+          const Icon(Icons.fastfood, size: 100),
         ),
 
         const SizedBox(width: 16),
