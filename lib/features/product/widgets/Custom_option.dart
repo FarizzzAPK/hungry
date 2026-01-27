@@ -50,6 +50,13 @@ class CustomOption extends StatelessWidget {
                   height: 80,
                   width: 100,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(
+                      Icons.fastfood_outlined,
+                      size: 60,
+                      color: Colors.grey,
+                    );
+                  },
                 )
                     : const Icon(
                   Icons.image_not_supported,

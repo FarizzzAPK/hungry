@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hungry/core/constants/app_constants.dart';
+import 'package:hungry/features/cart/data/cart_model.dart';
 import 'package:hungry/features/product/data/models/options_model.dart';
 import 'package:hungry/features/product/data/models/topping_model.dart';
 import 'package:hungry/features/product/data/repos/product_repo.dart';
@@ -11,8 +12,15 @@ import 'package:hungry/shared/custom_total.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductDetailsView extends StatefulWidget {
-  const ProductDetailsView({super.key, required this.image});
+  const ProductDetailsView({
+    super.key,
+    required this.image,
+    required this.id,
+  });
+
   final String image;
+  final int id;
+
   @override
   State<ProductDetailsView> createState() => _ProductDetailsViewState();
 }
@@ -20,8 +28,10 @@ class ProductDetailsView extends StatefulWidget {
 class _ProductDetailsViewState extends State<ProductDetailsView> {
   double value = 0.7;
   double total = 18.5;
- int? selectedTopping;
-  int? selectedOption;
+
+  /// selected ids
+  List<int> selectedTopping = [];
+  List<int> selectedOption = [];
 
   final ProductRepo productRepo = ProductRepo();
 
@@ -72,18 +82,19 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                /// spicy slider + image
                 SpicySlider(
                   image: widget.image,
                   value: value,
                   onChanged: (v) {
-                    setState(() {
-                      value = v;
-                    });
+                    setState(() => value = v);
                   },
                 ),
-                const SizedBox(height: 16),
-                CustomText(text: "Toppings", weight: FontWeight.bold),
 
+                const SizedBox(height: 16),
+
+                /// ---------------- TOPPINGS ----------------
+                CustomText(text: "Toppings", weight: FontWeight.bold),
                 const SizedBox(height: 8),
 
                 SingleChildScrollView(
@@ -91,51 +102,77 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                   child: Row(
                     children: List.generate(toppings?.length ?? 4, (index) {
                       final topping =
-                          (toppings != null && index < toppings!.length)
+                      (toppings != null && index < toppings!.length)
                           ? toppings![index]
                           : null;
-                      bool isSelected = false;
-                      if(selectedTopping == index){
-                        isSelected=true;
-                      }
+
+                      final int? toppingId = topping?.id;
+
+                      final bool isSelected =
+                          toppingId != null &&
+                              selectedTopping.contains(toppingId);
+
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomTopping(
-                          onTap: () {
-                            setState(() {
-                              selectedTopping = index;
-                            });
-                          },
-                          isSelected: isSelected,
                           image: topping?.image ?? '',
                           name: topping?.name ?? 'Loading',
+                          isSelected: isSelected,
+                          onTap: () {
+                            if (toppingId == null) return;
+
+                            setState(() {
+                              if (selectedTopping.contains(toppingId)) {
+                                selectedTopping.remove(toppingId);
+                              } else {
+                                selectedTopping.add(toppingId);
+                              }
+                            });
+                          },
                         ),
                       );
                     }),
                   ),
                 ),
+
                 const SizedBox(height: 16),
+
+                /// ---------------- OPTIONS ----------------
                 CustomText(text: "Side options", weight: FontWeight.bold),
                 const SizedBox(height: 8),
+
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: List.generate(options?.length ?? 4, (index) {
                       final option =
-                          (options != null && index < options!.length)
+                      (options != null && index < options!.length)
                           ? options![index]
                           : null;
+
+                      final int? optionId = option?.id;
+
+                      final bool isSelected =
+                          optionId != null &&
+                              selectedOption.contains(optionId);
+
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomOption(
-                          onTap: (){
-                        setState(() {
-                        selectedOption = index;
-                        });
-                        },
-                          isSelected: selectedOption == index,
                           image: option?.image ?? '',
                           name: option?.name ?? 'Loading',
+                          isSelected: isSelected,
+                          onTap: () {
+                            if (optionId == null) return;
+
+                            setState(() {
+                              if (selectedOption.contains(optionId)) {
+                                selectedOption.remove(optionId);
+                              } else {
+                                selectedOption.add(optionId);
+                              }
+                            });
+                          },
                         ),
                       );
                     }),
@@ -144,12 +181,22 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
 
                 const SizedBox(height: 24),
 
-                /// 🔥 Total Section
+                /// ---------------- TOTAL ----------------
                 CustomTotal(
                   total: total,
                   totalText: "Total",
                   buttonText: "Add To Cart",
-                  onTap: () {},
+                  onTap: () {
+                    final cartItem = CartModel(
+                      id: widget.id,
+                      qty: 1,
+                      spicy: value,
+                      toppings: selectedTopping,
+                      options: selectedOption,
+                    );
+
+                    debugPrint(cartItem.toString());
+                  },
                 ),
               ],
             ),

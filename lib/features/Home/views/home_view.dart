@@ -104,7 +104,8 @@ class _HomeViewState extends State<HomeView> {
                           context,
                           MaterialPageRoute(
                             builder: (_) => ProductDetailsView(
-
+                              id: product.id ?? 1,
+image: product.image ?? "",
                             ),
                           ),
                         );

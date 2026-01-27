@@ -50,6 +50,13 @@ class CustomTopping extends StatelessWidget {
                   height: 70,
                   width: 70,
                   fit: BoxFit.fill,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(
+                      Icons.fastfood_outlined,
+                      size: 60,
+                      color: Colors.grey,
+                    );
+                  },
                 )
                     : const Icon(
                   Icons.image_not_supported,
